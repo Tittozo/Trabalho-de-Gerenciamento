@@ -6,7 +6,7 @@ namespace Trabalho_de_Gerenciamento.Data
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-        { 
+        {
 
         }
 
@@ -15,6 +15,10 @@ namespace Trabalho_de_Gerenciamento.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Pacientes aqui
+            modelBuilder.Entity<Pacientes>()
+                .Property(p => p.DataNascimento)
+                .HasColumnType("timestamp without time zone");
+
             modelBuilder.Entity<Pacientes>().HasData(
                 new Pacientes
                 {
@@ -49,7 +53,7 @@ namespace Trabalho_de_Gerenciamento.Data
                         new DateTime(1985, 8, 15),
                         DateTimeKind.Utc)
                 }
-             );
+            );
         }
     }
 }

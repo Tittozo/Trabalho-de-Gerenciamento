@@ -1,0 +1,26 @@
+﻿@model Trabalho_de_Gerenciamento.Models.Pacientes
+
+@*
+*@
+@{
+	ViewData["Title"] = "Create";
+
+}
+
+<form asp-action="Create" method="post">
+	<div>
+		<label asp-for="Nome"></label>
+		<input asp-for="Nome" />
+		<label asp-for="CPF"></label>
+		<input asp-for="CPF" />
+		<label asp-for="Telefone"></label>
+		<input asp-for="Telefone" />
+		<label asp-for="Endereco"></label>
+		<input asp-for="Endereco" />
+		<label asp-for="DataNascimento"></label>
+		<input asp-for="DataNascimento" type="date" />
+
+		<button type="submit">Cadastrar</button>
+	</div>
+</form>
+
