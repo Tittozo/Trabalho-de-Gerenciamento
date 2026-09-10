@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace Trabalho_de_Gerenciamento.Models;
 
-public class Paciente
+public class Pacientes
 {
         public int Id { get; set; }
 
