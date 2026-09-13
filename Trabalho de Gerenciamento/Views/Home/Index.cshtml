@@ -3,54 +3,96 @@
 }
 
 <!-- Área principal da página inicial -->
-<div class="text-center mt-5">
 
-    <!-- Título do sistema -->
-    <h1 class="display-4">Sistema de Gerenciamento</h1>
+<div class="text-center py-5">
 
-    <!-- Descrição do sistema -->
-    <p class="lead">
-        Gerenciamento de pacientes de forma simples e organizada.
+    ```
+    <h1 class="display-4 fw-bold">Sistema de Gerenciamento</h1>
+
+    <p class="lead text-muted mt-3">
+        Gerencie os pacientes de forma simples, rápida e organizada.
     </p>
 
-    <!-- Botão para acessar os pacientes -->
     <a asp-controller="Pacientes"
        asp-action="Index"
-       class="btn btn-primary mt-3">
+       class="btn btn-primary btn-lg mt-3">
         Acessar Pacientes
     </a>
+    ```
 
 </div>
 
-<!-- Área com informações sobre o sistema -->
-<div class="container mt-5">
+<!-- Área com as principais funções do sistema -->
 
-    <div class="row text-center">
+<div class="container pb-5">
 
-        <!-- Primeiro bloco -->
+    ```
+    <div class="row g-4">
+
+        <!-- Card de pacientes -->
         <div class="col-md-4">
-            <h3>Pacientes</h3>
-            <p>
-                Consulte os pacientes cadastrados no sistema.
-            </p>
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+
+                    <h3 class="card-title">Pacientes</h3>
+
+                    <p class="card-text text-muted">
+                        Consulte os pacientes cadastrados no sistema.
+                    </p>
+
+                    <a asp-controller="Pacientes"
+                       asp-action="Index"
+                       class="btn btn-outline-primary">
+                        Ver pacientes
+                    </a>
+
+                </div>
+            </div>
         </div>
 
-        <!-- Segundo bloco -->
+        <!-- Card de cadastro -->
         <div class="col-md-4">
-            <h3>Cadastro</h3>
-            <p>
-                Cadastre novos pacientes de maneira simples.
-            </p>
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+
+                    <h3 class="card-title">Cadastro</h3>
+
+                    <p class="card-text text-muted">
+                        Cadastre novos pacientes informando seus dados.
+                    </p>
+
+                    <a asp-controller="Pacientes"
+                       asp-action="Create"
+                       class="btn btn-outline-primary">
+                        Cadastrar
+                    </a>
+
+                </div>
+            </div>
         </div>
 
-        <!-- Terceiro bloco -->
+        <!-- Card de gerenciamento -->
         <div class="col-md-4">
-            <h3>Gerenciamento</h3>
-            <p>
-                Edite ou exclua informações dos pacientes.
-            </p>
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center p-4">
+
+                    <h3 class="card-title">Gerenciamento</h3>
+
+                    <p class="card-text text-muted">
+                        Edite ou exclua os dados dos pacientes cadastrados.
+                    </p>
+
+                    <a asp-controller="Pacientes"
+                       asp-action="Index"
+                       class="btn btn-outline-primary">
+                        Gerenciar
+                    </a>
+
+                </div>
+            </div>
         </div>
 
     </div>
+    ```
 
 </div>
