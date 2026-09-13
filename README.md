@@ -1,4 +1,4 @@
-# 🏥 Trabalho de Gerenciamento
+# Trabalho de Gerenciamento
 
 Sistema web desenvolvido para fins acadêmicos durante o curso de **Análise e Desenvolvimento de Sistemas (ADS)**.
 
@@ -6,7 +6,7 @@ O projeto tem como objetivo aplicar na prática conceitos de **C#, ASP.NET Core 
 
 ---
 
-## 📌 Sobre o Projeto
+##  Sobre o Projeto
 
 O sistema foi desenvolvido para realizar o **gerenciamento de pacientes**, permitindo cadastrar, consultar, editar e excluir informações.
 
@@ -21,7 +21,7 @@ O projeto foi desenvolvido de maneira incremental, registrando as principais eta
 
 ---
 
-## 🎯 Objetivos
+##  Objetivos
 
 O desenvolvimento do projeto busca colocar em prática:
 
@@ -41,7 +41,7 @@ O desenvolvimento do projeto busca colocar em prática:
 
 ---
 
-# 🛠️ Tecnologias Utilizadas
+#  Tecnologias Utilizadas
 
 | Tecnologia                | Utilização                           |
 | ------------------------- | ------------------------------------ |
@@ -65,7 +65,7 @@ Microsoft.EntityFrameworkCore.Tools
 
 ---
 
-# 🏗️ Estrutura do Projeto
+#  Estrutura do Projeto
 
 A aplicação utiliza uma estrutura baseada no padrão MVC:
 
@@ -106,7 +106,7 @@ Trabalho-de-Gerenciamento/
 
 ---
 
-# 👤 Model — Pacientes
+#  Model — Pacientes
 
 A classe `Pacientes` representa os pacientes cadastrados no sistema.
 
@@ -125,7 +125,7 @@ O `Id` é utilizado como chave primária através da convenção do Entity Frame
 
 ---
 
-# ✅ Validação dos Dados
+#  Validação dos Dados
 
 Foram utilizadas **Data Annotations** para realizar validações básicas diretamente no Model.
 
@@ -155,7 +155,7 @@ As validações foram aplicadas aos campos:
 
 ---
 
-# 🗄️ Banco de Dados
+#  Banco de Dados
 
 O sistema utiliza o **PostgreSQL** para armazenar os pacientes.
 
@@ -198,7 +198,7 @@ O `DbSet<Pacientes>` representa a tabela de pacientes no banco de dados.
 
 ---
 
-# 🌱 Seed de Dados
+#  Seed de Dados
 
 Foram adicionados dados iniciais utilizando o recurso `HasData()` do Entity Framework Core.
 
@@ -212,7 +212,7 @@ O Seed facilita os testes e permite que a aplicação tenha registros disponíve
 
 ---
 
-# 📅 Configuração da Data de Nascimento
+#  Configuração da Data de Nascimento
 
 Como o projeto utiliza PostgreSQL, a propriedade `DataNascimento` foi configurada para utilizar:
 
@@ -224,7 +224,7 @@ Essa configuração evita problemas relacionados ao armazenamento da data no Pos
 
 ---
 
-# 🔗 Connection String
+#  Connection String
 
 A conexão com o banco é configurada através do `appsettings.json`.
 
@@ -240,11 +240,11 @@ Exemplo:
 
 O `Program.cs` utiliza essa configuração para conectar a aplicação ao PostgreSQL.
 
-> ⚠️ **Importante:** nunca publique uma senha real de banco de dados em um repositório público.
+>  **Importante:** nunca publique uma senha real de banco de dados em um repositório público.
 
 ---
 
-# ⚙️ Program.cs
+#  Program.cs
 
 O `Program.cs` realiza as principais configurações da aplicação.
 
@@ -271,7 +271,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 ---
 
-# 🔄 CRUD de Pacientes
+#  CRUD de Pacientes
 
 O sistema possui um CRUD completo.
 
@@ -284,7 +284,7 @@ U → Update  → Atualizar
 D → Delete  → Excluir
 ```
 
-## ➕ Create
+##  Create
 
 Permite cadastrar um novo paciente.
 
@@ -304,7 +304,7 @@ PostgreSQL
 
 ---
 
-## 📋 Read
+##  Read
 
 A página `Index` consulta os pacientes cadastrados e apresenta os dados em uma tabela.
 
@@ -319,7 +319,7 @@ São exibidos:
 
 ---
 
-## ✏️ Update
+##  Update
 
 A função `Edit` permite alterar os dados de um paciente existente.
 
@@ -334,7 +334,7 @@ O sistema:
 
 ---
 
-## 🗑️ Delete
+##  Delete
 
 A exclusão possui uma tela de confirmação.
 
@@ -348,7 +348,7 @@ O sistema:
 
 ---
 
-# 🎮 PacientesController
+#  PacientesController
 
 O `PacientesController` concentra as operações relacionadas aos pacientes.
 
@@ -366,7 +366,7 @@ O Controller recebe o `AppDbContext` através de **injeção de dependência**.
 
 ---
 
-# 🖥️ Views
+#  Views
 
 ## `Index.cshtml`
 
@@ -417,13 +417,13 @@ Página utilizada para confirmar a exclusão de um paciente antes de removê-lo 
 
 ---
 
-# 🎨 Interface
+#  Interface
 
 Além das funcionalidades do sistema, foram realizadas melhorias simples na interface.
 
 A intenção foi deixar o projeto mais organizado visualmente sem adicionar complexidade desnecessária.
 
-## 🏠 Home
+##  Home
 
 A página inicial foi personalizada com:
 
@@ -445,7 +445,7 @@ Gerenciamento
 
 ---
 
-## 🔒 Privacy
+##  Privacy
 
 A página de privacidade também foi personalizada.
 
@@ -462,7 +462,7 @@ A página mantém uma aparência simples e adequada ao projeto acadêmico.
 
 ---
 
-# 🎨 Bootstrap
+#  Bootstrap
 
 O Bootstrap foi utilizado para melhorar a apresentação visual das páginas.
 
@@ -489,7 +489,7 @@ Não foi adicionada uma estrutura visual complexa. A ideia foi utilizar recursos
 
 ---
 
-# 🧩 Razor Tag Helpers
+#  Razor Tag Helpers
 
 As Views utilizam recursos do Razor e Tag Helpers do ASP.NET Core.
 
@@ -517,7 +517,7 @@ Esses recursos facilitam a ligação entre as Views e os Models.
 
 ---
 
-# 🗃️ Migrations
+#  Migrations
 
 As migrations foram utilizadas para controlar a estrutura do banco de dados através do Entity Framework Core.
 
@@ -543,7 +543,7 @@ As migrations permitiram criar a tabela `Pacientes` e posteriormente registrar o
 
 ---
 
-# 🔁 Fluxo da Aplicação
+#  Fluxo da Aplicação
 
 O funcionamento básico do sistema pode ser representado da seguinte forma:
 
@@ -588,7 +588,7 @@ Lista de pacientes
 
 ---
 
-# 🧪 Validação no Controller
+#  Validação no Controller
 
 Antes de salvar os dados, o Controller verifica:
 
@@ -607,7 +607,7 @@ Quando existem erros de validação, o usuário retorna ao formulário para corr
 
 ---
 
-# 💻 Execução do Projeto
+#  Execução do Projeto
 
 ## Pré-requisitos
 
@@ -674,7 +674,7 @@ Ou execute diretamente pelo Visual Studio.
 
 ---
 
-# 📂 Principais Arquivos
+#  Principais Arquivos
 
 | Arquivo                              | Responsabilidade                  |
 | ------------------------------------ | --------------------------------- |
@@ -693,7 +693,7 @@ Ou execute diretamente pelo Visual Studio.
 
 ---
 
-# 🌿 Controle de Versão
+#  Controle de Versão
 
 O projeto foi desenvolvido utilizando Git e GitHub.
 
@@ -731,7 +731,7 @@ Essa organização permite acompanhar a evolução do projeto e identificar quan
 
 ---
 
-# 📝 Comentários no Código
+#  Comentários no Código
 
 Foram adicionados comentários explicativos aos principais arquivos do projeto.
 
@@ -752,7 +752,7 @@ A documentação foi mantida de forma simples para acompanhar o nível do projet
 
 ---
 
-# 🔐 Segurança
+#  Segurança
 
 Alguns cuidados foram considerados durante o desenvolvimento.
 
@@ -772,7 +772,7 @@ Como o sistema trabalha com informações pessoais, uma futura versão de produ�
 
 ---
 
-# 📚 Conceitos Aplicados
+#  Conceitos Aplicados
 
 Durante o desenvolvimento foram trabalhados os seguintes conceitos:
 
@@ -834,7 +834,7 @@ Durante o desenvolvimento foram trabalhados os seguintes conceitos:
 
 ---
 
-# 📈 Evolução do Projeto
+#  Evolução do Projeto
 
 O projeto foi desenvolvido em etapas:
 
@@ -868,7 +868,7 @@ O projeto foi desenvolvido em etapas:
 
 ---
 
-# 🎓 Finalidade Acadêmica
+#  Finalidade Acadêmica
 
 O projeto tem finalidade acadêmica e foi desenvolvido para demonstrar a aplicação prática dos conhecimentos estudados durante o curso de **Análise e Desenvolvimento de Sistemas**.
 
@@ -876,7 +876,7 @@ A implementação priorizou uma estrutura simples, funcional e compreensível, p
 
 ---
 
-# 🚀 Possíveis Melhorias Futuras
+#  Possíveis Melhorias Futuras
 
 O projeto pode receber novas funcionalidades futuramente, como:
 
@@ -895,7 +895,7 @@ Essas funcionalidades não fazem parte da implementação atual e podem ser adic
 
 ---
 
-# 👨‍💻 Autor
+#  Autor
 
 **Mateus Antunes**
 
@@ -905,9 +905,9 @@ Projeto desenvolvido para fins acadêmicos no curso de:
 
 ---
 
-## 📌 Status do Projeto
+##  Status do Projeto
 
-🟢 **Em desenvolvimento**
+ **Em desenvolvimento**
 
 ### Funcionalidades atuais
 
