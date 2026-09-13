@@ -1,38 +1,59 @@
 ﻿@model Trabalho_de_Gerenciamento.Models.Pacientes
-{
-ViewData["Title"] = "Editar Paciente";
+
+@{
+    // Define o título da página
+    ViewData["Title"] = "Editar Paciente";
 }
 
+<!-- Título principal da página -->
+<h1>Editar Paciente</h1>
+
+<!-- Formulário responsável pela edição dos dados do paciente -->
 <form asp-action="Edit" method="post">
 
+    <!-- Campo oculto que mantém o ID do paciente -->
     <input type="hidden" asp-for="Id" />
 
-    <div>
-        <label asp-for="Nome"></label>
-        <input asp-for="Nome" />
+    <!-- Campo para editar o nome do paciente -->
+    <div class="mb-3">
+        <label asp-for="Nome" class="form-label"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="CPF"></label>
-        <input asp-for="CPF" />
+    <!-- Campo para editar o CPF -->
+    <div class="mb-3">
+        <label asp-for="CPF" class="form-label"></label>
+        <input asp-for="CPF" class="form-control" />
+        <span asp-validation-for="CPF" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="Telefone"></label>
-        <input asp-for="Telefone" />
+    <!-- Campo para editar o telefone -->
+    <div class="mb-3">
+        <label asp-for="Telefone" class="form-label"></label>
+        <input asp-for="Telefone" class="form-control" />
+        <span asp-validation-for="Telefone" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="Endereco"></label>
-        <input asp-for="Endereco" />
+    <!-- Campo para editar o endereço -->
+    <div class="mb-3">
+        <label asp-for="Endereco" class="form-label"></label>
+        <input asp-for="Endereco" class="form-control" />
+        <span asp-validation-for="Endereco" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="DataNascimento"></label>
-        <input asp-for="DataNascimento" type="date" />
+    <!-- Campo para editar a data de nascimento -->
+    <div class="mb-3">
+        <label asp-for="DataNascimento" class="form-label"></label>
+        <input asp-for="DataNascimento" type="date" class="form-control" />
+        <span asp-validation-for="DataNascimento" class="text-danger"></span>
     </div>
 
-    <button type="submit">Salvar</button>
+    <!-- Envia os dados alterados para o método Edit do Controller -->
+    <button type="submit" class="btn btn-primary">Salvar alterações</button>
+
+    <!-- Retorna para a lista de pacientes sem realizar alterações -->
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
 
 </form>
 

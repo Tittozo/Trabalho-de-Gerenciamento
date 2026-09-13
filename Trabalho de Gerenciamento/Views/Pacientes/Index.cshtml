@@ -1,59 +1,101 @@
-﻿@model IEnumerable<Trabalho_de_Gerenciamento.Models.Pacientes>
+﻿
+@model IEnumerable<Trabalho_de_Gerenciamento.Models.Pacientes>
 
-<table>
+@{
+    // Define o título da página
+    ViewData["Title"] = "Pacientes";
+}
+
+<!-- Título principal da página -->
+<h1>Pacientes</h1>
+
+<!-- Link para abrir a tela de cadastro de um novo paciente -->
+<p>
+    <a asp-action="Create">Cadastrar novo paciente</a>
+</p>
+
+<!-- Tabela utilizada para apresentar os pacientes cadastrados -->
+<table class="table">
+
+    <!-- Cabeçalho da tabela -->
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.CPF)
             </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Telefone)
             </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Endereco)
             </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.DataNascimento)
             </th>
+
+            <!-- Coluna destinada às ações do paciente -->
+            <th>Ações</th>
         </tr>
     </thead>
 
+    <!-- Corpo da tabela -->
     <tbody>
-		@foreach (var item in Model)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Id)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Nome)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.CPF)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Telefone)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Endereco)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.DataNascimento)
-				</td>
+
+        <!-- Percorre todos os pacientes recebidos do Controller -->
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <!-- Exibe o ID do paciente -->
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
 
+                <!-- Exibe o nome do paciente -->
                 <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+
+                <!-- Exibe o CPF do paciente -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.CPF)
+                </td>
+
+                <!-- Exibe o telefone do paciente -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+
+                <!-- Exibe o endereço do paciente -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.Endereco)
+                </td>
+
+                <!-- Exibe a data de nascimento -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataNascimento)
+                </td>
+
+                <!-- Links para editar ou excluir o paciente -->
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
                 </td>
-			</tr>
-		}
+
+            </tr>
+        }
+
     </tbody>
 </table>
+

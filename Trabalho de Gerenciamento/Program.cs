@@ -1,40 +1,41 @@
 using Microsoft.EntityFrameworkCore;
 using Trabalho_de_Gerenciamento.Data;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
-//Adiciona o contexto do banco de dados
+// Adiciona os serviços necessários para utilizar MVC no projeto
+builder.Services.AddControllersWithViews();
+
+// Configura o Entity Framework Core para utilizar o PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
+        // Obtém a string de conexão definida no appsettings.json
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configura o tratamento de erros durante a execução da aplicação
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
+    // Define o tempo de validade do HSTS para 30 dias
     app.UseHsts();
 }
 
+// Redireciona automaticamente conexões HTTP para HTTPS
 app.UseHttpsRedirection();
+
+// Permite que a aplicação encontre arquivos estáticos, como CSS e JavaScript
+app.UseStaticFiles();
+
 app.UseRouting();
 
-app.UseAuthorization();
-
-app.MapStaticAssets();
-
+// Configura o acesso aos Controllers e às Views
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
-
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

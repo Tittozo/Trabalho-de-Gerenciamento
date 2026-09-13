@@ -1,8 +1,56 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Início";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Área principal da página inicial -->
+<div class="text-center mt-5">
+
+    <!-- Título do sistema -->
+    <h1 class="display-4">Sistema de Gerenciamento</h1>
+
+    <!-- Descrição do sistema -->
+    <p class="lead">
+        Gerenciamento de pacientes de forma simples e organizada.
+    </p>
+
+    <!-- Botão para acessar os pacientes -->
+    <a asp-controller="Pacientes"
+       asp-action="Index"
+       class="btn btn-primary mt-3">
+        Acessar Pacientes
+    </a>
+
+</div>
+
+<!-- Área com informações sobre o sistema -->
+<div class="container mt-5">
+
+    <div class="row text-center">
+
+        <!-- Primeiro bloco -->
+        <div class="col-md-4">
+            <h3>Pacientes</h3>
+            <p>
+                Consulte os pacientes cadastrados no sistema.
+            </p>
+        </div>
+
+        <!-- Segundo bloco -->
+        <div class="col-md-4">
+            <h3>Cadastro</h3>
+            <p>
+                Cadastre novos pacientes de maneira simples.
+            </p>
+        </div>
+
+        <!-- Terceiro bloco -->
+        <div class="col-md-4">
+            <h3>Gerenciamento</h3>
+            <p>
+                Edite ou exclua informações dos pacientes.
+            </p>
+        </div>
+
+    </div>
+
 </div>

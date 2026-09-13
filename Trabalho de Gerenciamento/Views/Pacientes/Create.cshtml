@@ -1,26 +1,54 @@
 ﻿@model Trabalho_de_Gerenciamento.Models.Pacientes
 
-@*
-*@
 @{
-	ViewData["Title"] = "Create";
-
+    // Define o título da página
+    ViewData["Title"] = "Cadastrar Paciente";
 }
 
+<h1>Cadastrar Paciente</h1>
+
+<!-- Formulário responsável pelo cadastro do paciente -->
 <form asp-action="Create" method="post">
-	<div>
-		<label asp-for="Nome"></label>
-		<input asp-for="Nome" />
-		<label asp-for="CPF"></label>
-		<input asp-for="CPF" />
-		<label asp-for="Telefone"></label>
-		<input asp-for="Telefone" />
-		<label asp-for="Endereco"></label>
-		<input asp-for="Endereco" />
-		<label asp-for="DataNascimento"></label>
-		<input asp-for="DataNascimento" type="date" />
 
-		<button type="submit">Cadastrar</button>
-	</div>
+    <!-- Campo para informar o nome do paciente -->
+    <div class="mb-3">
+        <label asp-for="Nome" class="form-label"></label>
+        <input asp-for="Nome" class="form-control" />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+
+    <!-- Campo para informar o CPF -->
+    <div class="mb-3">
+        <label asp-for="CPF" class="form-label"></label>
+        <input asp-for="CPF" class="form-control" />
+        <span asp-validation-for="CPF" class="text-danger"></span>
+    </div>
+
+    <!-- Campo para informar o telefone -->
+    <div class="mb-3">
+        <label asp-for="Telefone" class="form-label"></label>
+        <input asp-for="Telefone" class="form-control" />
+        <span asp-validation-for="Telefone" class="text-danger"></span>
+    </div>
+
+    <!-- Campo para informar o endereço -->
+    <div class="mb-3">
+        <label asp-for="Endereco" class="form-label"></label>
+        <input asp-for="Endereco" class="form-control" />
+        <span asp-validation-for="Endereco" class="text-danger"></span>
+    </div>
+
+    <!-- Campo para informar a data de nascimento -->
+    <div class="mb-3">
+        <label asp-for="DataNascimento" class="form-label"></label>
+        <input asp-for="DataNascimento" type="date" class="form-control" />
+        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+    </div>
+
+    <!-- Botão que envia o formulário para o método Create do Controller -->
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+
+    <!-- Volta para a lista de pacientes -->
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+
 </form>
-
