@@ -1,131 +1,928 @@
-markdown_content = """# Documentação do Projeto: Trabalho de Gerenciamento
+# 🏥 Trabalho de Gerenciamento
 
-> **Repositório:** [Tittozo/Trabalho-de-Gerenciamento](https://github.com/Tittozo/Trabalho-de-Gerenciamento)  
-> **Finalidade:** Documentação técnica e apresentação de funções para avaliação acadêmica.
+Sistema web desenvolvido para fins acadêmicos durante o curso de **Análise e Desenvolvimento de Sistemas (ADS)**.
 
----
-
-## 1. Visão Geral do Projeto
-
-Este repositório tem como objetivo principal o desenvolvimento e a estruturação de um sistema voltado para **atividades de gerenciamento**. O projeto foi concebido para aplicar boas práticas de engenharia de software, estruturação modular de código, organização de dados e implementação de fluxos lógicos consistentes com as demandas de controle operacional e administrativo.
+O projeto tem como objetivo aplicar na prática conceitos de **C#, ASP.NET Core MVC, Entity Framework Core, PostgreSQL, CRUD, validação de dados, migrations e Git/GitHub**.
 
 ---
 
-## 2. Estrutura e Organização do Código
+## 📌 Sobre o Projeto
 
-A arquitetura do projeto foi pensada para garantir clareza, separação de responsabilidades e facilidade de manutenção. As principais camadas e diretórios estruturam-se da seguinte forma:
+O sistema foi desenvolvido para realizar o **gerenciamento de pacientes**, permitindo cadastrar, consultar, editar e excluir informações.
 
-* **Módulos de Controle e Regras de Negócio:** Responsáveis por centralizar a lógica computacional do sistema.
-* **Interface / Camada de Apresentação:** Interação com o usuário ou manipulação de entradas e saídas.
-* **Persistência / Dados:** Estruturas dedicadas ao armazenamento ou manipulação de informações essenciais ao funcionamento do escopo gerencial.
+A aplicação utiliza o padrão **MVC (Model-View-Controller)**, mantendo uma separação simples entre:
 
----
+* **Model** → representa os dados do sistema.
+* **View** → responsável pela interface apresentada ao usuário.
+* **Controller** → recebe as requisições e executa as operações.
+* **Data** → responsável pelo acesso ao banco de dados.
 
-## 3. Principais Funções Implementadas
-
-Abaixo estão detalhadas as funções centrais desenvolvidas no repositório, acompanhadas de suas respectivas assinaturas lógicas e propósitos para apresentação ao orientador:
-
-### 3.1. Funções de Inicialização e Configuração
-* **Propósito:** Configurar o estado inicial do ambiente de execução e garantir que os parâmetros globais ou de sessão estejam íntegros antes da execução das rotinas gerenciais.
-* **Destaque Técnico:** Validação de pré-requisitos e carregamento de configurações padrão.
-
-### 3.2. Funções de Processamento e Regras de Gerenciamento
-* **Propósito:** Executar os cálculos, filtros ou tomadas de decisão lógicas inerentes ao escopo do trabalho.
-* **Destaque Técnico:** Tratamento robusto de exceções e estruturação modular que permite o reaproveitamento de código e facilidade nos testes unitários.
-
-### 3.3. Funções de Manipulação e Exibição de Resultados
-* **Propósito:** Consolidar os dados processados e apresentá-los de forma estruturada (seja via interface de texto, relatórios ou estruturas persistidas).
-* **Destaque Técnico:** Formatação clara de saídas para assegurar a legibilidade e auditoria dos dados gerados.
+O projeto foi desenvolvido de maneira incremental, registrando as principais etapas através do Git.
 
 ---
 
-## 4. Tecnologias e Padrões Utilizados
+## 🎯 Objetivos
 
-* **Controle de Versão:** Git e GitHub (utilizado para versionamento incremental e histórico de commits).
-* **Boas Práticas:** Modularização, clareza na nomeação de variáveis e funções, além de documentação descritiva para facilitar a revisão por pares e orientadores.
+O desenvolvimento do projeto busca colocar em prática:
+
+* Programação em C#
+* Orientação a Objetos
+* ASP.NET Core MVC
+* Entity Framework Core
+* PostgreSQL
+* Data Annotations
+* Validação de dados
+* Operações CRUD
+* Migrations
+* Seed de dados
+* Razor Views
+* Bootstrap
+* Git e GitHub
 
 ---
 
-## 5. Conclusão e Próximos Passos
+# 🛠️ Tecnologias Utilizadas
 
-O repositório atende aos critérios propostos para o trabalho de gerenciamento, apresentando uma base sólida, código limpo e extensível. Como melhorias futuras, podem ser aplicadas rotinas adicionais de testes automatizados e refinamento de interface ou persistência de dados.
-"""
+| Tecnologia                | Utilização                           |
+| ------------------------- | ------------------------------------ |
+| **C#**                    | Linguagem principal                  |
+| **ASP.NET Core MVC**      | Desenvolvimento da aplicação web     |
+| **Entity Framework Core** | Comunicação com o banco de dados     |
+| **PostgreSQL**            | Banco de dados                       |
+| **Npgsql**                | Integração do EF Core com PostgreSQL |
+| **Razor**                 | Desenvolvimento das Views            |
+| **Bootstrap**             | Interface visual                     |
+| **Git**                   | Controle de versão                   |
+| **GitHub**                | Hospedagem do repositório            |
 
-with open("documentacao_trabalho.md", "w", encoding="utf-8") as f:
-    f.write(markdown_content)
+### Pacotes principais
 
-print("Markdown gerado com sucesso!")
+```text
+Npgsql.EntityFrameworkCore.PostgreSQL
+Microsoft.EntityFrameworkCore.Design
+Microsoft.EntityFrameworkCore.Tools
+```
 
-Plaintext
-Markdown gerado com sucesso!
+---
 
-Documentação Técnica - Trabalho de Gerenciamento
-Este documento detalha a estrutura, a arquitetura e as principais funções implementadas no sistema, servindo como roteiro técnico para a apresentação e defesa do trabalho perante o orientador.
+# 🏗️ Estrutura do Projeto
 
-1. Visão Geral do Projeto
-O sistema foi desenvolvido com o propósito de automatizar processos de gerenciamento, aplicando conceitos fundamentais de desenvolvimento de software, modelagem de dados e estruturação em camadas para garantir a manutenibilidade e a clareza do código.
+A aplicação utiliza uma estrutura baseada no padrão MVC:
 
-2. Arquitetura e Organização do Código
-O código foi estruturado seguindo boas práticas de separação de responsabilidades (SoC), dividido tipicamente nas seguintes camadas:
+```text
+Trabalho-de-Gerenciamento/
+│
+├── Controllers/
+│   ├── HomeController.cs
+│   └── PacientesController.cs
+│
+├── Data/
+│   └── AppDbContext.cs
+│
+├── Migrations/
+│   └── Arquivos das migrations
+│
+├── Models/
+│   ├── ErrorViewModel.cs
+│   └── Pacientes.cs
+│
+├── Views/
+│   ├── Home/
+│   │   ├── Index.cshtml
+│   │   └── Privacy.cshtml
+│   │
+│   ├── Pacientes/
+│   │   ├── Index.cshtml
+│   │   ├── Create.cshtml
+│   │   ├── Edit.cshtml
+│   │   └── Delete.cshtml
+│   │
+│   └── Shared/
+│
+├── appsettings.json
+├── Program.cs
+└── Trabalho-de-Gerenciamento.csproj
+```
 
-Camada de Apresentação / Interface: Responsável pela interação direta com o usuário (seja via console, interface gráfica ou rotas web).
+---
 
-Camada de Regra de Negócios / Serviços: Contém a lógica principal da aplicação, validações e processamento dos dados.
+# 👤 Model — Pacientes
 
-Camada de Persistência / Dados: Gerencia a comunicação com o banco de dados e a execução de comandos SQL ou ORM.
+A classe `Pacientes` representa os pacientes cadastrados no sistema.
 
-3. Principais Funções e Métodos Utilizados
-Abaixo está o mapeamento das principais funções do sistema, estruturadas para facilitar a explicação durante a arguição:
+Atualmente possui os seguintes campos:
 
-Conexão e Inicialização
-Função: conectarBanco() / inicializarSistema()
+| Campo            | Tipo       | Descrição           |
+| ---------------- | ---------- | ------------------- |
+| `Id`             | `int`      | Identificador único |
+| `Nome`           | `string`   | Nome do paciente    |
+| `CPF`            | `string`   | CPF do paciente     |
+| `Telefone`       | `string`   | Telefone            |
+| `Endereco`       | `string`   | Endereço            |
+| `DataNascimento` | `DateTime` | Data de nascimento  |
 
-O que faz: Estabelece a conexão com o banco de dados ou inicializa as estruturas de arquivos necessárias para a execução.
+O `Id` é utilizado como chave primária através da convenção do Entity Framework Core.
 
-Como explicar ao orientador: "Garante que a aplicação tenha um canal de comunicação estável com a base de dados, tratando eventuais exceções de conexão logo na inicialização."
+---
 
-Operações de Cadastro (Create)
-Função: salvar() / inserirRegistro()
+# ✅ Validação dos Dados
 
-O que faz: Captura os dados inseridos pelo usuário, realiza validações preliminares (como campos obrigatórios ou duplicidade) e executa o comando de inserção.
+Foram utilizadas **Data Annotations** para realizar validações básicas diretamente no Model.
 
-Como explicar ao orientador: "Responsável por persistir novos dados com integridade, assegurando que regras de negócio básicas sejam validadas antes de gravar na base."
+Exemplo:
 
-Operações de Consulta (Read)
-Função: listarTodos() / buscarPorId()
+```csharp
+[Required]
+[StringLength(100)]
+public string Nome { get; set; }
+```
 
-O que faz: Executa consultas estruturadas para recuperar registros do banco de dados, retornando os dados formatados para a interface.
+### `[Required]`
 
-Como explicar ao orientador: "Realiza a recuperação eficiente das informações armazenadas, permitindo tanto a listagem geral quanto a busca direcionada por identificadores únicos."
+Indica que o campo é obrigatório.
 
-Operações de Atualização (Update)
-Função: atualizar()
+### `[StringLength]`
 
-O que faz: Localiza um registro existente com base em seu identificador (ID) e aplica as modificações enviadas pelo usuário.
+Define a quantidade máxima de caracteres permitida.
 
-Como explicar ao orientador: "Garante a mutabilidade controlada dos dados, atualizando apenas os campos necessários sem corromper a integridade dos registros vinculados."
+As validações foram aplicadas aos campos:
 
-Operações de Exclusão (Delete)
-Função: remover() / deletar()
+* Nome
+* CPF
+* Telefone
+* Endereço
+* Data de nascimento
 
-O que faz: Remove um registro do sistema, respeitando as restrições de chave estrangeira e integridade referencial.
+---
 
-Como explicar ao orientador: "Gerencia a exclusão de dados de forma segura, evitando inconsistências estruturais no banco de dados."
+# 🗄️ Banco de Dados
 
-4. Tecnologias e Ferramentas Utilizadas
-Linguagem Principal: [Inserir linguagem, ex: C# / Python / C]
+O sistema utiliza o **PostgreSQL** para armazenar os pacientes.
 
-Banco de Dados: [Inserir SGBD, ex: PostgreSQL / SQL Server]
+Durante o desenvolvimento local foi utilizado:
 
-Controle de Versão: Git e GitHub (Tittozo/Trabalho-de-Gerenciamento)
+```text
+Host: localhost
+Porta: 5432
+Banco: Gerenciamento
+Usuário: postgres
+```
 
-5. Como Executar o Projeto
-Clone o repositório na sua máquina:
+A tabela principal do sistema é:
 
-Bash
+```text
+Pacientes
+```
+
+---
+
+# 🔌 Entity Framework Core
+
+O acesso ao banco de dados é realizado através do **Entity Framework Core**.
+
+Foi criado o `AppDbContext`:
+
+```csharp
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<Pacientes> Pacientes { get; set; }
+}
+```
+
+O `DbSet<Pacientes>` representa a tabela de pacientes no banco de dados.
+
+---
+
+# 🌱 Seed de Dados
+
+Foram adicionados dados iniciais utilizando o recurso `HasData()` do Entity Framework Core.
+
+Atualmente existem três pacientes utilizados como dados iniciais:
+
+* João Silva
+* Mateus Sousa
+* Maria Oliveira
+
+O Seed facilita os testes e permite que a aplicação tenha registros disponíveis logo após a criação do banco.
+
+---
+
+# 📅 Configuração da Data de Nascimento
+
+Como o projeto utiliza PostgreSQL, a propriedade `DataNascimento` foi configurada para utilizar:
+
+```csharp
+.HasColumnType("timestamp without time zone")
+```
+
+Essa configuração evita problemas relacionados ao armazenamento da data no PostgreSQL.
+
+---
+
+# 🔗 Connection String
+
+A conexão com o banco é configurada através do `appsettings.json`.
+
+Exemplo:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5432;Database=Gerenciamento;Username=postgres;Password=SUA_SENHA"
+  }
+}
+```
+
+O `Program.cs` utiliza essa configuração para conectar a aplicação ao PostgreSQL.
+
+> ⚠️ **Importante:** nunca publique uma senha real de banco de dados em um repositório público.
+
+---
+
+# ⚙️ Program.cs
+
+O `Program.cs` realiza as principais configurações da aplicação.
+
+Entre elas:
+
+* Configuração do MVC
+* Configuração do Entity Framework Core
+* Conexão com PostgreSQL
+* Leitura da Connection String
+* Configuração do HTTPS
+* Arquivos estáticos
+* Roteamento da aplicação
+* Tratamento básico de erros
+
+A configuração do banco utiliza:
+
+```csharp
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    )
+);
+```
+
+---
+
+# 🔄 CRUD de Pacientes
+
+O sistema possui um CRUD completo.
+
+CRUD significa:
+
+```text
+C → Create  → Criar
+R → Read    → Ler
+U → Update  → Atualizar
+D → Delete  → Excluir
+```
+
+## ➕ Create
+
+Permite cadastrar um novo paciente.
+
+Fluxo:
+
+```text
+Formulário
+    ↓
+Create POST
+    ↓
+Validação
+    ↓
+AppDbContext
+    ↓
+PostgreSQL
+```
+
+---
+
+## 📋 Read
+
+A página `Index` consulta os pacientes cadastrados e apresenta os dados em uma tabela.
+
+São exibidos:
+
+* ID
+* Nome
+* CPF
+* Telefone
+* Endereço
+* Data de nascimento
+
+---
+
+## ✏️ Update
+
+A função `Edit` permite alterar os dados de um paciente existente.
+
+O sistema:
+
+1. Localiza o paciente pelo `Id`.
+2. Apresenta os dados no formulário.
+3. Recebe as alterações.
+4. Valida os dados.
+5. Atualiza o registro.
+6. Salva as alterações no banco.
+
+---
+
+## 🗑️ Delete
+
+A exclusão possui uma tela de confirmação.
+
+O sistema:
+
+1. Localiza o paciente pelo `Id`.
+2. Apresenta os dados.
+3. Solicita confirmação.
+4. Remove o registro.
+5. Salva a alteração no banco.
+
+---
+
+# 🎮 PacientesController
+
+O `PacientesController` concentra as operações relacionadas aos pacientes.
+
+| Método                             | Função              |
+| ---------------------------------- | ------------------- |
+| `Index()`                          | Lista os pacientes  |
+| `Create()`                         | Abre o cadastro     |
+| `Create(Pacientes paciente)`       | Salva novo paciente |
+| `Edit(int? id)`                    | Abre edição         |
+| `Edit(int id, Pacientes paciente)` | Salva alterações    |
+| `Delete(int? id)`                  | Abre confirmação    |
+| `Delete(int id)`                   | Remove paciente     |
+
+O Controller recebe o `AppDbContext` através de **injeção de dependência**.
+
+---
+
+# 🖥️ Views
+
+## `Index.cshtml`
+
+Responsável pela listagem dos pacientes.
+
+Possui:
+
+* Tabela de pacientes
+* Botão para cadastro
+* Link para edição
+* Link para exclusão
+
+---
+
+## `Create.cshtml`
+
+Formulário utilizado para cadastrar novos pacientes.
+
+Campos:
+
+```text
+Nome
+CPF
+Telefone
+Endereço
+Data de nascimento
+```
+
+Também utiliza mensagens de validação.
+
+---
+
+## `Edit.cshtml`
+
+Formulário utilizado para editar os dados de um paciente.
+
+O `Id` é mantido através de um campo oculto:
+
+```html
+<input type="hidden" asp-for="Id" />
+```
+
+---
+
+## `Delete.cshtml`
+
+Página utilizada para confirmar a exclusão de um paciente antes de removê-lo do banco.
+
+---
+
+# 🎨 Interface
+
+Além das funcionalidades do sistema, foram realizadas melhorias simples na interface.
+
+A intenção foi deixar o projeto mais organizado visualmente sem adicionar complexidade desnecessária.
+
+## 🏠 Home
+
+A página inicial foi personalizada com:
+
+* Título do sistema
+* Descrição
+* Botão de acesso aos pacientes
+* Cards informativos
+* Melhor espaçamento
+* Botões utilizando Bootstrap
+* Layout responsivo
+
+A Home apresenta três áreas principais:
+
+```text
+Pacientes
+Cadastro
+Gerenciamento
+```
+
+---
+
+## 🔒 Privacy
+
+A página de privacidade também foi personalizada.
+
+Foram adicionados:
+
+* Título
+* Descrição
+* Card de informações
+* Seções de conteúdo
+* Alerta informativo
+* Espaçamento melhor organizado
+
+A página mantém uma aparência simples e adequada ao projeto acadêmico.
+
+---
+
+# 🎨 Bootstrap
+
+O Bootstrap foi utilizado para melhorar a apresentação visual das páginas.
+
+Algumas classes utilizadas incluem:
+
+```text
+container
+row
+col-md-4
+card
+card-body
+btn
+btn-primary
+btn-outline-primary
+shadow-sm
+text-center
+text-muted
+mt-3
+mb-3
+py-5
+```
+
+Não foi adicionada uma estrutura visual complexa. A ideia foi utilizar recursos básicos já disponíveis no projeto.
+
+---
+
+# 🧩 Razor Tag Helpers
+
+As Views utilizam recursos do Razor e Tag Helpers do ASP.NET Core.
+
+Exemplo:
+
+```html
+<a asp-action="Create">
+    Cadastrar novo paciente
+</a>
+```
+
+Outro exemplo:
+
+```html
+<input asp-for="Nome" class="form-control" />
+```
+
+E para validação:
+
+```html
+<span asp-validation-for="Nome"></span>
+```
+
+Esses recursos facilitam a ligação entre as Views e os Models.
+
+---
+
+# 🗃️ Migrations
+
+As migrations foram utilizadas para controlar a estrutura do banco de dados através do Entity Framework Core.
+
+A migration inicial foi criada utilizando:
+
+```powershell
+Add-Migration InitialCreate
+```
+
+Para aplicar as alterações ao banco:
+
+```powershell
+Update-Database
+```
+
+Para consultar as migrations:
+
+```powershell
+Get-Migration
+```
+
+As migrations permitiram criar a tabela `Pacientes` e posteriormente registrar o Seed inicial.
+
+---
+
+# 🔁 Fluxo da Aplicação
+
+O funcionamento básico do sistema pode ser representado da seguinte forma:
+
+```text
+             USUÁRIO
+                │
+                ▼
+              VIEW
+                │
+                ▼
+           CONTROLLER
+                │
+                ▼
+          APPDBCONTEXT
+                │
+                ▼
+           ENTITY FRAMEWORK
+                │
+                ▼
+           POSTGRESQL
+```
+
+### Exemplo: cadastro
+
+```text
+Usuário preenche o formulário
+            ↓
+Create.cshtml
+            ↓
+PacientesController
+            ↓
+ModelState.IsValid
+            ↓
+AppDbContext
+            ↓
+SaveChanges()
+            ↓
+PostgreSQL
+            ↓
+Lista de pacientes
+```
+
+---
+
+# 🧪 Validação no Controller
+
+Antes de salvar os dados, o Controller verifica:
+
+```csharp
+if (ModelState.IsValid)
+```
+
+Quando os dados são válidos:
+
+```csharp
+_context.Pacientes.Add(paciente);
+_context.SaveChanges();
+```
+
+Quando existem erros de validação, o usuário retorna ao formulário para corrigir os dados.
+
+---
+
+# 💻 Execução do Projeto
+
+## Pré-requisitos
+
+Para executar o projeto é necessário ter instalado:
+
+* .NET SDK
+* PostgreSQL
+* Visual Studio ou VS Code
+* Git
+
+---
+
+## 1. Clonar o repositório
+
+```bash
 git clone https://github.com/Tittozo/Trabalho-de-Gerenciamento.git
-Abra o projeto na sua IDE de preferência.
+```
 
-Configure as variáveis de conexão com o banco de dados (se aplicável).
+Depois entre na pasta:
 
-Execute o arquivo principal da aplicação.
+```bash
+cd Trabalho-de-Gerenciamento
+```
+
+---
+
+## 2. Configurar o banco
+
+Crie um banco PostgreSQL chamado:
+
+```text
+Gerenciamento
+```
+
+Depois configure a Connection String no `appsettings.json`.
+
+Exemplo:
+
+```json
+"DefaultConnection": "Host=localhost;Port=5432;Database=Gerenciamento;Username=postgres;Password=SUA_SENHA"
+```
+
+---
+
+## 3. Aplicar as migrations
+
+No Console do Gerenciador de Pacotes do Visual Studio:
+
+```powershell
+Update-Database
+```
+
+---
+
+## 4. Executar a aplicação
+
+No terminal:
+
+```bash
+dotnet run
+```
+
+Ou execute diretamente pelo Visual Studio.
+
+---
+
+# 📂 Principais Arquivos
+
+| Arquivo                              | Responsabilidade                  |
+| ------------------------------------ | --------------------------------- |
+| `Program.cs`                         | Configuração da aplicação         |
+| `appsettings.json`                   | Configurações e conexão com banco |
+| `Models/Pacientes.cs`                | Modelo de paciente                |
+| `Data/AppDbContext.cs`               | Acesso ao banco                   |
+| `Controllers/PacientesController.cs` | Operações CRUD                    |
+| `Views/Pacientes/Index.cshtml`       | Listagem                          |
+| `Views/Pacientes/Create.cshtml`      | Cadastro                          |
+| `Views/Pacientes/Edit.cshtml`        | Edição                            |
+| `Views/Pacientes/Delete.cshtml`      | Exclusão                          |
+| `Views/Home/Index.cshtml`            | Página inicial                    |
+| `Views/Home/Privacy.cshtml`          | Página de privacidade             |
+| `Migrations/`                        | Histórico da estrutura do banco   |
+
+---
+
+# 🌿 Controle de Versão
+
+O projeto foi desenvolvido utilizando Git e GitHub.
+
+As principais etapas foram registradas individualmente através de commits.
+
+## Histórico de desenvolvimento
+
+```text
+chore: criar projeto inicial
+
+feat: criar AppDbContext
+
+feat: criar classe Paciente
+
+feat: adicionar validações em Paciente
+
+feat: configurar banco e migration inicial
+
+feat: adicionar seeding de pacientes
+
+feat: listar pacientes
+
+feat: cadastrar pacientes
+
+feat: editar pacientes
+
+feat: excluir pacientes
+
+feat: melhorar interface das páginas iniciais
+
+docs: adicionar comentários explicativos ao código
+```
+
+Essa organização permite acompanhar a evolução do projeto e identificar quando cada funcionalidade foi implementada.
+
+---
+
+# 📝 Comentários no Código
+
+Foram adicionados comentários explicativos aos principais arquivos do projeto.
+
+Entre eles:
+
+* `Pacientes.cs`
+* `AppDbContext.cs`
+* `Program.cs`
+* `PacientesController.cs`
+* `Index.cshtml`
+* `Create.cshtml`
+* `Edit.cshtml`
+* `Delete.cshtml`
+
+Os comentários têm como objetivo facilitar a leitura e explicar a função de cada parte do código.
+
+A documentação foi mantida de forma simples para acompanhar o nível do projeto acadêmico.
+
+---
+
+# 🔐 Segurança
+
+Alguns cuidados foram considerados durante o desenvolvimento.
+
+### Senha do banco
+
+A senha do PostgreSQL não deve ser disponibilizada publicamente.
+
+A Connection String utilizada no ambiente local deve utilizar a senha correspondente ao banco configurado na máquina.
+
+### HTTPS
+
+O projeto possui configuração para utilização de HTTPS durante a execução da aplicação.
+
+### Dados dos pacientes
+
+Como o sistema trabalha com informações pessoais, uma futura versão de produção deverá possuir controles de acesso e medidas adicionais de segurança.
+
+---
+
+# 📚 Conceitos Aplicados
+
+Durante o desenvolvimento foram trabalhados os seguintes conceitos:
+
+### C#
+
+* Classes
+* Propriedades
+* Métodos
+* Tipos de dados
+* Orientação a Objetos
+
+### ASP.NET Core MVC
+
+* Models
+* Views
+* Controllers
+* Actions
+* Rotas
+* Injeção de dependência
+
+### Entity Framework Core
+
+* `DbContext`
+* `DbSet`
+* Migrations
+* `HasData`
+* `SaveChanges`
+* Consulta e alteração de registros
+
+### Banco de Dados
+
+* PostgreSQL
+* Tabela
+* Chave primária
+* Campos
+* Persistência de dados
+
+### Validação
+
+* `Required`
+* `StringLength`
+* `ModelState.IsValid`
+
+### Front-end
+
+* Razor
+* HTML
+* Bootstrap
+* Layout responsivo
+
+### Versionamento
+
+* Git
+* GitHub
+* Commits incrementais
+* `git add`
+* `git commit`
+* `git push`
+
+---
+
+# 📈 Evolução do Projeto
+
+O projeto foi desenvolvido em etapas:
+
+```text
+1. Criação do projeto
+        ↓
+2. Configuração do DbContext
+        ↓
+3. Criação do Model Pacientes
+        ↓
+4. Adição das validações
+        ↓
+5. Configuração do PostgreSQL
+        ↓
+6. Criação das migrations
+        ↓
+7. Seed de pacientes
+        ↓
+8. Listagem
+        ↓
+9. Cadastro
+        ↓
+10. Edição
+        ↓
+11. Exclusão
+        ↓
+12. Melhoria visual da Home e Privacy
+        ↓
+13. Organização e comentários do código
+```
+
+---
+
+# 🎓 Finalidade Acadêmica
+
+O projeto tem finalidade acadêmica e foi desenvolvido para demonstrar a aplicação prática dos conhecimentos estudados durante o curso de **Análise e Desenvolvimento de Sistemas**.
+
+A implementação priorizou uma estrutura simples, funcional e compreensível, permitindo demonstrar a integração entre aplicação web, banco de dados e controle de versão.
+
+---
+
+# 🚀 Possíveis Melhorias Futuras
+
+O projeto pode receber novas funcionalidades futuramente, como:
+
+* Autenticação de usuários
+* Controle de acesso
+* Pesquisa de pacientes
+* Paginação
+* Máscara para CPF e telefone
+* Melhorias adicionais na interface
+* Mensagens de confirmação
+* Testes automatizados
+* Deploy da aplicação
+* Configuração de banco para ambiente de produção
+
+Essas funcionalidades não fazem parte da implementação atual e podem ser adicionadas posteriormente conforme a evolução do projeto.
+
+---
+
+# 👨‍💻 Autor
+
+**Mateus Antunes**
+
+Projeto desenvolvido para fins acadêmicos no curso de:
+
+**Análise e Desenvolvimento de Sistemas — ADS**
+
+---
+
+## 📌 Status do Projeto
+
+🟢 **Em desenvolvimento**
+
+### Funcionalidades atuais
+
+* [x] Estrutura ASP.NET Core MVC
+* [x] Model de pacientes
+* [x] Validações
+* [x] PostgreSQL
+* [x] Entity Framework Core
+* [x] Migrations
+* [x] Seed de dados
+* [x] Listagem
+* [x] Cadastro
+* [x] Edição
+* [x] Exclusão
+* [x] Interface inicial personalizada
+* [x] Página Privacy personalizada
+* [x] Comentários explicativos no código
+* [x] Versionamento com Git/GitHub
