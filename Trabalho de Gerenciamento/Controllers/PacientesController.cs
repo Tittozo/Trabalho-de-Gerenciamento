@@ -72,5 +72,38 @@ namespace Trabalho_de_Gerenciamento.Controllers
 
             return View(paciente);
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var paciente = _context.Pacientes.Find(id);
+
+            if (paciente == null)
+            {
+                return NotFound();
+            }
+
+            return View(paciente);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var paciente = _context.Pacientes.Find(id);
+
+            if (paciente == null)
+            {
+                return NotFound();
+            }
+
+            _context.Pacientes.Remove(paciente);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
