@@ -2,26 +2,45 @@
 
 Sistema web desenvolvido para fins acadêmicos durante o curso de **Análise e Desenvolvimento de Sistemas (ADS)**.
 
-O projeto tem como objetivo aplicar na prática conceitos de **C#, ASP.NET Core MVC, Entity Framework Core, PostgreSQL, CRUD, validação de dados, migrations e Git/GitHub**.
+O projeto tem como objetivo aplicar na prática conceitos de **C#, ASP.NET Core MVC, Entity Framework Core, PostgreSQL, CRUD, validação de dados, Service, migrations e Git/GitHub**.
 
 ---
 
-##  Sobre o Projeto
+## Sobre o Projeto
 
 O sistema foi desenvolvido para realizar o **gerenciamento de pacientes**, permitindo cadastrar, consultar, editar e excluir informações.
 
-A aplicação utiliza o padrão **MVC (Model-View-Controller)**, mantendo uma separação simples entre:
+A aplicação utiliza o padrão **MVC (Model-View-Controller)**, juntamente com uma camada simples de **Service**, mantendo uma separação entre as responsabilidades:
 
 * **Model** → representa os dados do sistema.
 * **View** → responsável pela interface apresentada ao usuário.
-* **Controller** → recebe as requisições e executa as operações.
+* **Controller** → recebe as requisições e controla o fluxo da aplicação.
+* **Service** → concentra as operações relacionadas aos pacientes.
 * **Data** → responsável pelo acesso ao banco de dados.
+
+A estrutura atual segue o fluxo:
+
+```text
+Usuário
+   ↓
+View
+   ↓
+Controller
+   ↓
+PacienteService
+   ↓
+AppDbContext
+   ↓
+Entity Framework Core
+   ↓
+PostgreSQL
+```
 
 O projeto foi desenvolvido de maneira incremental, registrando as principais etapas através do Git.
 
 ---
 
-##  Objetivos
+# Objetivos
 
 O desenvolvimento do projeto busca colocar em prática:
 
@@ -36,12 +55,13 @@ O desenvolvimento do projeto busca colocar em prática:
 * Migrations
 * Seed de dados
 * Razor Views
+* Service
 * Bootstrap
 * Git e GitHub
 
 ---
 
-#  Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 | Tecnologia                | Utilização                           |
 | ------------------------- | ------------------------------------ |
@@ -65,9 +85,9 @@ Microsoft.EntityFrameworkCore.Tools
 
 ---
 
-#  Estrutura do Projeto
+# Estrutura do Projeto
 
-A aplicação utiliza uma estrutura baseada no padrão MVC:
+A aplicação utiliza uma estrutura baseada no padrão MVC, com uma camada de Service para as operações dos pacientes:
 
 ```text
 Trabalho-de-Gerenciamento/
@@ -85,6 +105,9 @@ Trabalho-de-Gerenciamento/
 ├── Models/
 │   ├── ErrorViewModel.cs
 │   └── Pacientes.cs
+│
+├── Services/
+│   └── PacienteService.cs
 │
 ├── Views/
 │   ├── Home/
@@ -106,7 +129,7 @@ Trabalho-de-Gerenciamento/
 
 ---
 
-#  Model — Pacientes
+# Model — Pacientes
 
 A classe `Pacientes` representa os pacientes cadastrados no sistema.
 
@@ -125,7 +148,7 @@ O `Id` é utilizado como chave primária através da convenção do Entity Frame
 
 ---
 
-#  Validação dos Dados
+# Validação dos Dados
 
 Foram utilizadas **Data Annotations** para realizar validações básicas diretamente no Model.
 
@@ -155,7 +178,7 @@ As validações foram aplicadas aos campos:
 
 ---
 
-#  Banco de Dados
+# Banco de Dados
 
 O sistema utiliza o **PostgreSQL** para armazenar os pacientes.
 
@@ -176,7 +199,7 @@ Pacientes
 
 ---
 
-# 🔌 Entity Framework Core
+# Entity Framework Core
 
 O acesso ao banco de dados é realizado através do **Entity Framework Core**.
 
@@ -196,9 +219,88 @@ public class AppDbContext : DbContext
 
 O `DbSet<Pacientes>` representa a tabela de pacientes no banco de dados.
 
+O `AppDbContext` também é responsável pelas configurações da entidade e pelo Seed de dados.
+
 ---
 
-#  Seed de Dados
+# Service — PacienteService
+
+Para melhorar a organização do projeto, foi criada a classe:
+
+```text
+Services/PacienteService.cs
+```
+
+O `PacienteService` é responsável por concentrar as operações relacionadas aos pacientes.
+
+Com isso, o `PacientesController` não precisa mais acessar diretamente o `AppDbContext` para realizar as operações no banco.
+
+### Operações do Service
+
+O `PacienteService` possui métodos para:
+
+```text
+Listar()
+BuscarPorId()
+Cadastrar()
+Atualizar()
+Excluir()
+```
+
+Exemplo:
+
+```csharp
+public void Cadastrar(Pacientes paciente)
+{
+    _context.Pacientes.Add(paciente);
+    _context.SaveChanges();
+}
+```
+
+O Controller apenas solicita a operação ao Service:
+
+```csharp
+_service.Cadastrar(paciente);
+```
+
+### Fluxo atual
+
+```text
+PacientesController
+        ↓
+PacienteService
+        ↓
+AppDbContext
+        ↓
+PostgreSQL
+```
+
+Essa organização permite separar melhor as responsabilidades do sistema sem adicionar uma arquitetura complexa.
+
+---
+
+# Injeção de Dependência
+
+O `PacienteService` é registrado no `Program.cs` através de:
+
+```csharp
+builder.Services.AddScoped<PacienteService>();
+```
+
+Dessa forma, o ASP.NET Core consegue fornecer automaticamente o Service para o `PacientesController`.
+
+O Controller recebe o Service pelo construtor:
+
+```csharp
+public PacientesController(PacienteService service)
+{
+    _service = service;
+}
+```
+
+---
+
+# Seed de Dados
 
 Foram adicionados dados iniciais utilizando o recurso `HasData()` do Entity Framework Core.
 
@@ -212,7 +314,7 @@ O Seed facilita os testes e permite que a aplicação tenha registros disponíve
 
 ---
 
-#  Configuração da Data de Nascimento
+# Configuração da Data de Nascimento
 
 Como o projeto utiliza PostgreSQL, a propriedade `DataNascimento` foi configurada para utilizar:
 
@@ -224,7 +326,7 @@ Essa configuração evita problemas relacionados ao armazenamento da data no Pos
 
 ---
 
-#  Connection String
+# Connection String
 
 A conexão com o banco é configurada através do `appsettings.json`.
 
@@ -240,11 +342,11 @@ Exemplo:
 
 O `Program.cs` utiliza essa configuração para conectar a aplicação ao PostgreSQL.
 
->  **Importante:** nunca publique uma senha real de banco de dados em um repositório público.
+> **Importante:** nunca publique uma senha real de banco de dados em um repositório público.
 
 ---
 
-#  Program.cs
+# Program.cs
 
 O `Program.cs` realiza as principais configurações da aplicação.
 
@@ -254,6 +356,7 @@ Entre elas:
 * Configuração do Entity Framework Core
 * Conexão com PostgreSQL
 * Leitura da Connection String
+* Registro do `PacienteService`
 * Configuração do HTTPS
 * Arquivos estáticos
 * Roteamento da aplicação
@@ -269,9 +372,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 );
 ```
 
+O Service é registrado utilizando:
+
+```csharp
+builder.Services.AddScoped<PacienteService>();
+```
+
 ---
 
-#  CRUD de Pacientes
+# CRUD de Pacientes
 
 O sistema possui um CRUD completo.
 
@@ -284,7 +393,7 @@ U → Update  → Atualizar
 D → Delete  → Excluir
 ```
 
-##  Create
+## Create
 
 Permite cadastrar um novo paciente.
 
@@ -297,6 +406,8 @@ Create POST
     ↓
 Validação
     ↓
+PacienteService
+    ↓
 AppDbContext
     ↓
 PostgreSQL
@@ -304,9 +415,15 @@ PostgreSQL
 
 ---
 
-##  Read
+## Read
 
 A página `Index` consulta os pacientes cadastrados e apresenta os dados em uma tabela.
+
+O Controller solicita os dados ao Service:
+
+```csharp
+var pacientes = _service.Listar();
+```
 
 São exibidos:
 
@@ -319,7 +436,7 @@ São exibidos:
 
 ---
 
-##  Update
+## Update
 
 A função `Edit` permite alterar os dados de um paciente existente.
 
@@ -329,12 +446,13 @@ O sistema:
 2. Apresenta os dados no formulário.
 3. Recebe as alterações.
 4. Valida os dados.
-5. Atualiza o registro.
-6. Salva as alterações no banco.
+5. Envia o paciente para o `PacienteService`.
+6. Atualiza o registro.
+7. Salva as alterações no banco.
 
 ---
 
-##  Delete
+## Delete
 
 A exclusão possui uma tela de confirmação.
 
@@ -343,30 +461,33 @@ O sistema:
 1. Localiza o paciente pelo `Id`.
 2. Apresenta os dados.
 3. Solicita confirmação.
-4. Remove o registro.
-5. Salva a alteração no banco.
+4. Envia o paciente para o `PacienteService`.
+5. Remove o registro.
+6. Salva a alteração no banco.
 
 ---
 
-#  PacientesController
+# PacientesController
 
-O `PacientesController` concentra as operações relacionadas aos pacientes.
+O `PacientesController` controla as requisições relacionadas aos pacientes.
 
-| Método                             | Função              |
-| ---------------------------------- | ------------------- |
-| `Index()`                          | Lista os pacientes  |
-| `Create()`                         | Abre o cadastro     |
-| `Create(Pacientes paciente)`       | Salva novo paciente |
-| `Edit(int? id)`                    | Abre edição         |
-| `Edit(int id, Pacientes paciente)` | Salva alterações    |
-| `Delete(int? id)`                  | Abre confirmação    |
-| `Delete(int id)`                   | Remove paciente     |
+Atualmente, ele utiliza o `PacienteService` para realizar as operações de acesso aos dados.
 
-O Controller recebe o `AppDbContext` através de **injeção de dependência**.
+| Método                             | Função                          |
+| ---------------------------------- | ------------------------------- |
+| `Index()`                          | Lista os pacientes              |
+| `Create()`                         | Abre o cadastro                 |
+| `Create(Pacientes paciente)`       | Solicita o cadastro ao Service  |
+| `Edit(int? id)`                    | Abre edição                     |
+| `Edit(int id, Pacientes paciente)` | Solicita atualização ao Service |
+| `Delete(int? id)`                  | Abre confirmação                |
+| `Delete(int id)`                   | Solicita exclusão ao Service    |
+
+O Controller recebe o `PacienteService` através de **injeção de dependência**.
 
 ---
 
-#  Views
+# Views
 
 ## `Index.cshtml`
 
@@ -417,13 +538,13 @@ Página utilizada para confirmar a exclusão de um paciente antes de removê-lo 
 
 ---
 
-#  Interface
+# Interface
 
 Além das funcionalidades do sistema, foram realizadas melhorias simples na interface.
 
 A intenção foi deixar o projeto mais organizado visualmente sem adicionar complexidade desnecessária.
 
-##  Home
+## Home
 
 A página inicial foi personalizada com:
 
@@ -445,7 +566,7 @@ Gerenciamento
 
 ---
 
-##  Privacy
+## Privacy
 
 A página de privacidade também foi personalizada.
 
@@ -462,7 +583,7 @@ A página mantém uma aparência simples e adequada ao projeto acadêmico.
 
 ---
 
-#  Bootstrap
+# Bootstrap
 
 O Bootstrap foi utilizado para melhorar a apresentação visual das páginas.
 
@@ -489,7 +610,7 @@ Não foi adicionada uma estrutura visual complexa. A ideia foi utilizar recursos
 
 ---
 
-#  Razor Tag Helpers
+# Razor Tag Helpers
 
 As Views utilizam recursos do Razor e Tag Helpers do ASP.NET Core.
 
@@ -517,7 +638,7 @@ Esses recursos facilitam a ligação entre as Views e os Models.
 
 ---
 
-#  Migrations
+# Migrations
 
 As migrations foram utilizadas para controlar a estrutura do banco de dados através do Entity Framework Core.
 
@@ -543,27 +664,30 @@ As migrations permitiram criar a tabela `Pacientes` e posteriormente registrar o
 
 ---
 
-#  Fluxo da Aplicação
+# Fluxo da Aplicação
 
-O funcionamento básico do sistema pode ser representado da seguinte forma:
+O funcionamento atual do sistema pode ser representado da seguinte forma:
 
 ```text
-             USUÁRIO
-                │
-                ▼
-              VIEW
-                │
-                ▼
-           CONTROLLER
-                │
-                ▼
-          APPDBCONTEXT
-                │
-                ▼
-           ENTITY FRAMEWORK
-                │
-                ▼
-           POSTGRESQL
+              USUÁRIO
+                 │
+                 ▼
+                VIEW
+                 │
+                 ▼
+             CONTROLLER
+                 │
+                 ▼
+          PACIENTESERVICE
+                 │
+                 ▼
+           APPDBCONTEXT
+                 │
+                 ▼
+        ENTITY FRAMEWORK
+                 │
+                 ▼
+             POSTGRESQL
 ```
 
 ### Exemplo: cadastro
@@ -577,6 +701,8 @@ PacientesController
             ↓
 ModelState.IsValid
             ↓
+PacienteService
+            ↓
 AppDbContext
             ↓
 SaveChanges()
@@ -588,9 +714,9 @@ Lista de pacientes
 
 ---
 
-#  Validação no Controller
+# Validação no Controller
 
-Antes de salvar os dados, o Controller verifica:
+Antes de enviar os dados para o Service, o Controller verifica:
 
 ```csharp
 if (ModelState.IsValid)
@@ -599,15 +725,16 @@ if (ModelState.IsValid)
 Quando os dados são válidos:
 
 ```csharp
-_context.Pacientes.Add(paciente);
-_context.SaveChanges();
+_service.Cadastrar(paciente);
 ```
 
 Quando existem erros de validação, o usuário retorna ao formulário para corrigir os dados.
 
+A responsabilidade de salvar o registro no banco fica no `PacienteService`.
+
 ---
 
-#  Execução do Projeto
+# Execução do Projeto
 
 ## Pré-requisitos
 
@@ -674,26 +801,27 @@ Ou execute diretamente pelo Visual Studio.
 
 ---
 
-#  Principais Arquivos
+# Principais Arquivos
 
-| Arquivo                              | Responsabilidade                  |
-| ------------------------------------ | --------------------------------- |
-| `Program.cs`                         | Configuração da aplicação         |
-| `appsettings.json`                   | Configurações e conexão com banco |
-| `Models/Pacientes.cs`                | Modelo de paciente                |
-| `Data/AppDbContext.cs`               | Acesso ao banco                   |
-| `Controllers/PacientesController.cs` | Operações CRUD                    |
-| `Views/Pacientes/Index.cshtml`       | Listagem                          |
-| `Views/Pacientes/Create.cshtml`      | Cadastro                          |
-| `Views/Pacientes/Edit.cshtml`        | Edição                            |
-| `Views/Pacientes/Delete.cshtml`      | Exclusão                          |
-| `Views/Home/Index.cshtml`            | Página inicial                    |
-| `Views/Home/Privacy.cshtml`          | Página de privacidade             |
-| `Migrations/`                        | Histórico da estrutura do banco   |
+| Arquivo                              | Responsabilidade                                  |
+| ------------------------------------ | ------------------------------------------------- |
+| `Program.cs`                         | Configuração da aplicação e registro dos serviços |
+| `appsettings.json`                   | Configurações e conexão com banco                 |
+| `Models/Pacientes.cs`                | Modelo de paciente                                |
+| `Data/AppDbContext.cs`               | Configuração e acesso ao banco                    |
+| `Services/PacienteService.cs`        | Operações relacionadas aos pacientes              |
+| `Controllers/PacientesController.cs` | Controle das requisições                          |
+| `Views/Pacientes/Index.cshtml`       | Listagem                                          |
+| `Views/Pacientes/Create.cshtml`      | Cadastro                                          |
+| `Views/Pacientes/Edit.cshtml`        | Edição                                            |
+| `Views/Pacientes/Delete.cshtml`      | Exclusão                                          |
+| `Views/Home/Index.cshtml`            | Página inicial                                    |
+| `Views/Home/Privacy.cshtml`          | Página de privacidade                             |
+| `Migrations/`                        | Histórico da estrutura do banco                   |
 
 ---
 
-#  Controle de Versão
+# Controle de Versão
 
 O projeto foi desenvolvido utilizando Git e GitHub.
 
@@ -725,13 +853,15 @@ feat: excluir pacientes
 feat: melhorar interface das páginas iniciais
 
 docs: adicionar comentários explicativos ao código
+
+refactor: adicionar service de pacientes
 ```
 
 Essa organização permite acompanhar a evolução do projeto e identificar quando cada funcionalidade foi implementada.
 
 ---
 
-#  Comentários no Código
+# Comentários no Código
 
 Foram adicionados comentários explicativos aos principais arquivos do projeto.
 
@@ -741,6 +871,7 @@ Entre eles:
 * `AppDbContext.cs`
 * `Program.cs`
 * `PacientesController.cs`
+* `PacienteService.cs`
 * `Index.cshtml`
 * `Create.cshtml`
 * `Edit.cshtml`
@@ -752,7 +883,7 @@ A documentação foi mantida de forma simples para acompanhar o nível do projet
 
 ---
 
-#  Segurança
+# Segurança
 
 Alguns cuidados foram considerados durante o desenvolvimento.
 
@@ -772,7 +903,7 @@ Como o sistema trabalha com informações pessoais, uma futura versão de produ�
 
 ---
 
-#  Conceitos Aplicados
+# Conceitos Aplicados
 
 Durante o desenvolvimento foram trabalhados os seguintes conceitos:
 
@@ -792,6 +923,13 @@ Durante o desenvolvimento foram trabalhados os seguintes conceitos:
 * Actions
 * Rotas
 * Injeção de dependência
+
+### Service
+
+* Separação de responsabilidades
+* Classe de serviço
+* Métodos para operações dos pacientes
+* Comunicação entre Controller e acesso aos dados
 
 ### Entity Framework Core
 
@@ -834,7 +972,7 @@ Durante o desenvolvimento foram trabalhados os seguintes conceitos:
 
 ---
 
-#  Evolução do Projeto
+# Evolução do Projeto
 
 O projeto foi desenvolvido em etapas:
 
@@ -864,19 +1002,23 @@ O projeto foi desenvolvido em etapas:
 12. Melhoria visual da Home e Privacy
         ↓
 13. Organização e comentários do código
+        ↓
+14. Criação do PacienteService
+        ↓
+15. Separação das operações do Controller para o Service
 ```
 
 ---
 
-#  Finalidade Acadêmica
+# Finalidade Acadêmica
 
 O projeto tem finalidade acadêmica e foi desenvolvido para demonstrar a aplicação prática dos conhecimentos estudados durante o curso de **Análise e Desenvolvimento de Sistemas**.
 
-A implementação priorizou uma estrutura simples, funcional e compreensível, permitindo demonstrar a integração entre aplicação web, banco de dados e controle de versão.
+A implementação priorizou uma estrutura simples, funcional e compreensível, permitindo demonstrar a integração entre aplicação web, banco de dados, camada de Service e controle de versão.
 
 ---
 
-#  Possíveis Melhorias Futuras
+# Possíveis Melhorias Futuras
 
 O projeto pode receber novas funcionalidades futuramente, como:
 
@@ -895,7 +1037,7 @@ Essas funcionalidades não fazem parte da implementação atual e podem ser adic
 
 ---
 
-#  Autor
+# Autor
 
 **Mateus Antunes**
 
@@ -905,9 +1047,9 @@ Projeto desenvolvido para fins acadêmicos no curso de:
 
 ---
 
-##  Status do Projeto
+## Status do Projeto
 
- **Em desenvolvimento**
+**Em desenvolvimento**
 
 ### Funcionalidades atuais
 
@@ -925,4 +1067,6 @@ Projeto desenvolvido para fins acadêmicos no curso de:
 * [x] Interface inicial personalizada
 * [x] Página Privacy personalizada
 * [x] Comentários explicativos no código
+* [x] `PacienteService`
+* [x] Separação entre Controller e Service
 * [x] Versionamento com Git/GitHub
