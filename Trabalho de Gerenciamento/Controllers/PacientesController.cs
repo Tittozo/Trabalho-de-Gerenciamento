@@ -1,24 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Trabalho_de_Gerenciamento.Data;
 using Trabalho_de_Gerenciamento.Models;
+using Trabalho_de_Gerenciamento.Services;
 
 namespace Trabalho_de_Gerenciamento.Controllers
 {
     public class PacientesController : Controller
     {
-        // Contexto utilizado para acessar o banco de dados
-        private readonly AppDbContext _context;
+        // Serviço responsável pelas operações dos pacientes
+        private readonly PacienteService _service;
 
-        // Recebe o AppDbContext através da injeção de dependência
-        public PacientesController(AppDbContext context)
+        // Recebe o PacienteService através da injeção de dependência
+        public PacientesController(PacienteService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // Lista todos os pacientes cadastrados
         public IActionResult Index()
         {
-            return View(_context.Pacientes);
+            var pacientes = _service.Listar();
+
+            return View(pacientes);
         }
 
         // Abre a tela de cadastro
@@ -34,11 +36,8 @@ namespace Trabalho_de_Gerenciamento.Controllers
             // Verifica se os dados enviados são válidos
             if (ModelState.IsValid)
             {
-                // Adiciona o paciente ao banco de dados
-                _context.Pacientes.Add(paciente);
-
-                // Salva as alterações no banco de dados
-                _context.SaveChanges();
+                // Solicita ao Service o cadastro do paciente
+                _service.Cadastrar(paciente);
 
                 // Retorna para a lista de pacientes
                 return RedirectToAction("Index");
@@ -57,8 +56,8 @@ namespace Trabalho_de_Gerenciamento.Controllers
                 return NotFound();
             }
 
-            // Procura o paciente pelo ID
-            var paciente = _context.Pacientes.Find(id);
+            // Busca o paciente através do Service
+            var paciente = _service.BuscarPorId(id.Value);
 
             // Verifica se o paciente foi encontrado
             if (paciente == null)
@@ -83,17 +82,14 @@ namespace Trabalho_de_Gerenciamento.Controllers
             // Verifica se os dados alterados são válidos
             if (ModelState.IsValid)
             {
-                // Atualiza os dados do paciente
-                _context.Pacientes.Update(paciente);
-
-                // Salva as alterações no banco de dados
-                _context.SaveChanges();
+                // Solicita ao Service a atualização do paciente
+                _service.Atualizar(paciente);
 
                 // Retorna para a lista de pacientes
                 return RedirectToAction("Index");
             }
 
-            // Caso existam erros, retorna para o formulário de edição
+            // Caso existam erros, retorna para o formulário
             return View(paciente);
         }
 
@@ -106,8 +102,8 @@ namespace Trabalho_de_Gerenciamento.Controllers
                 return NotFound();
             }
 
-            // Procura o paciente pelo ID
-            var paciente = _context.Pacientes.Find(id);
+            // Busca o paciente através do Service
+            var paciente = _service.BuscarPorId(id.Value);
 
             // Verifica se o paciente foi encontrado
             if (paciente == null)
@@ -119,12 +115,12 @@ namespace Trabalho_de_Gerenciamento.Controllers
             return View(paciente);
         }
 
-        // Recebe a confirmação de exclusão
+        // Recebe a confirmação da exclusão
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            // Procura o paciente pelo ID
-            var paciente = _context.Pacientes.Find(id);
+            // Busca o paciente através do Service
+            var paciente = _service.BuscarPorId(id);
 
             // Verifica se o paciente existe
             if (paciente == null)
@@ -132,15 +128,11 @@ namespace Trabalho_de_Gerenciamento.Controllers
                 return NotFound();
             }
 
-            // Remove o paciente do contexto
-            _context.Pacientes.Remove(paciente);
-
-            // Salva a exclusão no banco de dados
-            _context.SaveChanges();
+            // Solicita ao Service a exclusão do paciente
+            _service.Excluir(paciente);
 
             // Retorna para a lista de pacientes
             return RedirectToAction("Index");
         }
     }
 }
-

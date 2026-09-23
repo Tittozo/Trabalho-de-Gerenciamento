@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Trabalho_de_Gerenciamento.Data;
+using Trabalho_de_Gerenciamento.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+
+// Registra o serviço responsável pelas operações dos pacientes
+builder.Services.AddScoped<PacienteService>();
 
 var app = builder.Build();
 
